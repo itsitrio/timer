@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterWolf Countdown Clock Configuration Wizard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffa629;
+            background-color: #050505;
+        }
+
+        form {
+            background: #111;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type=text], input[type=datetime-local], select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="wizardForm">
+        <label for="title">Countdown Title:</label>
+        <input type="text" id="title" name="title" placeholder="New Year Countdown">
+    
+        <label for="showClocks">Show Clocks:</label>
+        <select id="showClocks" name="showClocks">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    
+        <label for="endDate">End Date:</label>
+        <input type="datetime-local" id="endDate" name="endDate">
+    
+        <label for="timezone">Timezone:</label>
+        <select id="timezone" name="timezone">
+            <optgroup label="Common Scheduling Timezones">
+                <option selected="selected" value="Local">Local Time</option>
+                <option value="America/New_York">WaterWolf (EST)</option>
+                <option value="Europe/London">EUFuria (GMT)</option>
+            </optgroup>
+            <optgroup label="Other Timezones">
+                <option value="America/Los_Angeles">Pacific</option>
+                <option value="America/Phoenix">Arizona</option>
+                <option value="America/Denver">Mountain</option>
+                <option value="America/Chicago">Central</option>
+                <option value="America/New_York">Eastern</option>
+                <option value="UTC">UTC</option>
+            </optgroup>
+            <!-- Add other timezones as needed -->
+        </select>
+    
+        <input type="submit" value="Create Countdown">
+    </form>
+    <p> A service made by Itrio </p>
+    <script>
+        document.getElementById('wizardForm').onsubmit = function(e) {
+            e.preventDefault();
+            const title = encodeURIComponent(document.getElementById('title').value);
+            const showClocks = document.getElementById('showClocks').value;
+            const endDateInput = document.getElementById('endDate').value;
+            const timezone = document.getElementById('timezone').value;
+        
+            // Convert the selected date and time to the chosen timezone, then to UTC
+            let endDateUTC;
+            if (timezone === 'Local') {
+                // For local time, just convert the input date to UTC
+                endDateUTC = moment(endDateInput).utc().format();
+            } else {
+                // For other timezones, first interpret the date in the selected timezone, then convert to UTC
+                endDateUTC = moment.tz(endDateInput, timezone).utc().format();
+            }
+        
+            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}`;
+            window.location.href = countdownUrl;
+        };
+        </script>
+        
+</body>
+</html>

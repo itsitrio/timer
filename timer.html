@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="darkreader-lock">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterWolf Countdown Clock</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            background-color: #050505;
+            color: #ffa629;
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+            text-align: center;
+        }
+
+
+        #countdownTitle {
+            font-size: 4rem;
+            margin:0;
+        }
+
+        .countdown {
+            margin: 20px 0;
+        }
+
+        .countdown h1 {
+            font-size: 2em;
+            color: #ffa629;
+        }
+
+        .time-container {
+            display: flex;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .time-unit {
+            margin: 0 15px;
+            min-width: 180px;
+        }
+
+        .time-unit span {
+            display: block;
+            font-size: 4em;
+            font-weight: bold;
+        }
+
+        .time-unit div {
+            font-size: 0.5em;
+        }
+
+        @keyframes slide {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(0); }
+        }
+
+        .slide-up {
+            animation: slide 0.4s ease-out;
+        }
+
+        .timezone-display {
+            margin-top: 20px;
+        }
+
+        .timezone {
+            display: inline-block;
+            margin: 10px;
+            min-width: 300px;
+            padding: 10px;
+            background-color: #222;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        .timezone p {
+            font-size: 2.5rem;
+            font-weight:200px;
+            margin:15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="countdown">
+    <h1 id="countdownTitle">Countdown Timer</h1>
+    <div class="time-container">
+        <div class="time-unit">
+            <span id="days">00</span>
+            <div>Days</div>
+        </div>
+        <div class="time-unit">
+            <span id="hours">00</span>
+            <div>Hours</div>
+        </div>
+        <div class="time-unit">
+            <span id="minutes">00</span>
+            <div>Minutes</div>
+        </div>
+        <div class="time-unit">
+            <span id="seconds">00</span>
+            <div>Seconds</div>
+        </div>
+    </div>
+</div>
+
+<div class="timezone-display">
+    <div class="timezone">
+        <h2><i class="fa-solid fa-user">&nbsp;</i>&nbsp;Your Time</h2>
+        <p id="localTime">Loading...</p>
+    </div>
+    <div class="timezone">
+        <h2>WaterWolf Time</h2>
+        <p id="nyTime">Loading...</p>
+    </div>
+    <div class="timezone">
+        <h2>EUFuria Time</h2>
+        <p id="ukTime">Loading...</p>
+    </div>
+</div>
+<div id="targetTimeInTargetTimezone"></div>
+<div id="targetTimeInLocalTimezone"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const endDate = getDateFromURL();
+    document.getElementById('countdownTitle').textContent = getTitleFromURL() || 'Countdown Timer';
+    const timezone = getTimezoneFromURL(); // Implement similar to getTitleFromURL
+    displayTargetTimes(endDate, timezone); // Make sure to define this function
+    const showClocks = getShowClocksFromURL();
+    if (!showClocks) {
+        document.querySelector('.timezone-display').style.display = 'none';
+    }
+    setInterval(() => updateAll(endDate), 1000);
+    updateAll(endDate); // Initial call to avoid delay
+});
+
+function getTitleFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
+}
+
+function getDateFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const defaultDate = new Date();
+    defaultDate.setHours(defaultDate.getHours() + 1); // Default to 1 hour from now
+    return urlParams.get('date') ? new Date(decodeURIComponent(urlParams.get('date'))) : defaultDate;
+}
+
+function getShowClocksFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('showClocks') === 'true';
+}
+function getTimezoneFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const timezone = urlParams.get('timezone');
+    return timezone ? decodeURIComponent(timezone) : 'UTC'; // Default to 'UTC' if not specified
+}
+
+function updateAll(endDate) {
+    updateCountdown(endDate);
+    updateClocks();
+}
+
+function updateClocks() {
+    updateIfChanged('localTime', new Date().toLocaleTimeString());
+    updateIfChanged('nyTime', new Date().toLocaleTimeString('en-US', { timeZone: 'America/New_York' }));
+    updateIfChanged('ukTime', new Date().toLocaleTimeString('en-US', { timeZone: 'Europe/London' }));
+}
+
+function updateIfChanged(elementId, newValue) {
+    const element = document.getElementById(elementId);
+    if (element.textContent !== newValue) {
+        element.textContent = newValue;
+    }
+}
+
+function updateCountdown(targetDate) {
+    const now = new Date();
+    const distance = targetDate - now;
+
+    if (distance < 0) {
+        document.querySelector('.countdown').innerHTML = "<h1>Countdown Ended</h1>";
+        return;
+    }
+
+    // Determine visibility based on significance
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    let anyUnitVisible = false;
+    anyUnitVisible = updateUnitVisibility('days', days, anyUnitVisible);
+    anyUnitVisible = updateUnitVisibility('hours', hours, anyUnitVisible);
+    anyUnitVisible = updateUnitVisibility('minutes', minutes, anyUnitVisible);
+    updateUnitVisibility('seconds', seconds, anyUnitVisible); // Seconds are always updated
+}
+
+function displayTargetTimes(targetDateUTC, targetTimezone) {
+    // Hide the target timezone display if 'Local' is selected
+    if (targetTimezone === 'Local') {
+        document.getElementById('targetTimeInTargetTimezone').style.display = 'none';
+    } else {
+        const targetTimeInTargetTimezone = moment.utc(targetDateUTC).tz(targetTimezone).format('YYYY-MM-DD HH:mm:ss');
+        document.getElementById('targetTimeInTargetTimezone').textContent = `Target in ${targetTimezone}: ${targetTimeInTargetTimezone}`;
+        document.getElementById('targetTimeInTargetTimezone').style.display = 'block';
+    }
+    
+    // Always show the target time in the user's local timezone
+    const targetTimeInLocalTimezone = moment.utc(targetDateUTC).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss');
+    document.getElementById('targetTimeInLocalTimezone').textContent = `Local Target Time: ${targetTimeInLocalTimezone}`;
+}
+
+function updateUnitVisibility(unit, value, anyUnitVisible) {
+    const unitElement = document.getElementById(unit);
+    const unitContainer = unitElement.closest('.time-unit');
+    // Show the unit if its value is not 0 or any more significant unit is visible
+    if (value > 0 || anyUnitVisible) {
+        unitContainer.style.display = 'inline-block';
+        unitElement.textContent = value.toString().padStart(2, '0');
+        return true; // Indicates that this, or a more significant unit, is visible
+    } else {
+        unitContainer.style.display = 'none';
+        return anyUnitVisible; // State unchanged, pass it through
+    }
+}
+</script>
+
+</body>
+</html>
