@@ -13,7 +13,7 @@ function drawBlock(value, max, x, width) {
 function calculateChecksum(values) {
     // Sum up all the time values and then take modulo 256 to keep it within byte range
     const sum = values.reduce((acc, val) => acc + val, 0);
-    return sum % 8;
+    return sum % 64;
 }
 
 function updateTime() {
@@ -37,7 +37,7 @@ function updateTime() {
     // Calculate and draw checksum block
     const values = [hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 7, 50, 10); // Checksum block
+    drawBlock(checksum, 63, 50, 10); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
