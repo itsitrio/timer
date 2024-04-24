@@ -1,7 +1,7 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 80;
-canvas.height = 10;
+canvas.width = 160;
+canvas.height = 20;
 
 function drawBlock(value, max, x, width) {
     const luminance = Math.floor((255 - (value / max) * 255));
@@ -28,16 +28,16 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw time blocks
-    drawBlock(hours, 23, 0, 10); // Hours
-    drawBlock(minutes, 59, 10, 10); // Minutes
-    drawBlock(seconds, 59, 20, 10); // Seconds
-    drawBlock(deciseconds, 9, 30, 10); // Upper Deciseconds
-    drawBlock(centiseconds, 9, 40, 10); // Lower Centiseconds
+    drawBlock(hours, 23, 0, 20); // Hours
+    drawBlock(minutes, 59, 20, 20); // Minutes
+    drawBlock(seconds, 59, 40, 20); // Seconds
+    drawBlock(deciseconds, 9, 60, 20); // Upper Deciseconds
+    drawBlock(centiseconds, 9, 80, 20); // Lower Centiseconds
 
     // Calculate and draw checksum block
     const values = [hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 50, 10); // Checksum block
+    drawBlock(checksum, 63, 100, 20); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
