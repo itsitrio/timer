@@ -25,7 +25,7 @@ function updateTime() {
     drawBlock(minutes, 59, 100, 100); // Minutes
     drawBlock(seconds, 59, 200, 100); // Seconds
     drawBlock(deciseconds, 9, 300, 100); // Upper Deciseconds
-    drawBlock(centiseconds, 9, 400, 100); // Lower Deciseconds
+    //drawBlock(centiseconds, 9, 400, 100); // Lower Deciseconds
     // Add more blocks as needed
 
     requestAnimationFrame(updateTime);
