@@ -19,7 +19,6 @@ function calculateChecksum(values) {
 function updateTime() {
     const now = new Date();
     const days = now.getUTCDay();
-    console.log("Days:" + days)
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
@@ -30,16 +29,17 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw time blocks
-    drawBlock(hours, 23, 0, 20); // Hours
-    drawBlock(minutes, 59, 20, 20); // Minutes
-    drawBlock(seconds, 59, 40, 20); // Seconds
-    drawBlock(deciseconds, 9, 60, 20); // Upper Deciseconds
-    drawBlock(centiseconds, 9, 80, 20); // Lower Centiseconds
+    drawBlock(hours, 6, 0, 20); // Hours
+    drawBlock(hours, 23, 20, 20); // Hours
+    drawBlock(minutes, 59, 40, 20); // Minutes
+    drawBlock(seconds, 59, 60, 20); // Seconds
+    drawBlock(deciseconds, 9, 80, 20); // Upper Deciseconds
+    drawBlock(centiseconds, 9, 100, 20); // Lower Centiseconds
 
     // Calculate and draw checksum block
-    const values = [hours, minutes, seconds, deciseconds, centiseconds];
+    const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 100, 20); // Checksum block
+    drawBlock(checksum, 63, 120, 20); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
