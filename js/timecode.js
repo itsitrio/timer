@@ -39,15 +39,16 @@ function updateTime() {
     // Draw time blocks
     drawBlock(days, 6, 0, 40); // Hours
     drawBlock(hours, 23, 40, 40); // Hours
-    drawColorBlock(minutes, 59, 80, 40); // Minutes
-    drawBlock(seconds, 59, 120, 40); // Seconds
-    drawBlock(deciseconds, 9, 160, 40); // Upper Deciseconds
-    drawBlock(centiseconds, 9, 200, 40); // Lower Centiseconds
+    drawColorBlock(minutes, 80, 40); // Minutes
+    drawBlock(minutes, 59, 120, 40); // Minutes
+    drawBlock(seconds, 59, 160, 40); // Seconds
+    drawBlock(deciseconds, 9, 200, 40); // Upper Deciseconds
+    drawBlock(centiseconds, 9, 240, 40); // Lower Centiseconds
 
     // Calculate and draw checksum block
     const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 240, 40); // Checksum block
+    drawBlock(checksum, 63, 280, 40); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
