@@ -36,7 +36,7 @@ function updateTime() {
     const milliseconds = now.getMilliseconds();
     const deciseconds = Math.floor(milliseconds / 100);
     const centiseconds = Math.floor((milliseconds % 100) / 10);
-    const frames = Math.floor((milliseconds))
+    const frames = Math.floor((milliseconds/1000)*frameRate)
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
