@@ -4,7 +4,7 @@ canvas.width = 320;
 canvas.height = 40;
 
 // Colors for drawing the colors
-const = colors = ['red','green','blue','cyan','yellow','magenta','black','white']
+const colors = ['red','green','blue','cyan','yellow','magenta','black','white']
 
 function drawBlock(value, max, x, width) {
     const luminance = Math.floor((255 - (value / max) * 255));
@@ -12,9 +12,9 @@ function drawBlock(value, max, x, width) {
     ctx.fillStyle = color;
     ctx.fillRect(x, 0, width, canvas.height);
 }
-function drawColorBlock(minute,x,width) {
-    const colorIndex = minute % colors.length;
-    ctx.fillStyle = colors[colorIndex]
+function drawColorBlock(minute, x, width) {
+    const colorIndex = minute % colors.length; // Cycle through the color array based on the minute
+    ctx.fillStyle = colors[colorIndex];
     ctx.fillRect(x, 0, width, canvas.height);
 }
 
