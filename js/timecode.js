@@ -19,7 +19,7 @@ function calculateChecksum(values) {
 function updateTime() {
     const now = new Date();
     const days = now.getUTCDay();
-    console.log(days)
+    console.log("Days:" + days)
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
