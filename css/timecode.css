@@ -7,8 +7,8 @@ body, html {
 }
 
 .canvas-container {
-    width: 160px;
-    height: 20px;
+    width: 320px;
+    height: 40px;
     background-color: #fff;
     border: 1px solid #000;
 }

@@ -1,7 +1,7 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 160;
-canvas.height = 20;
+canvas.width = 320;
+canvas.height = 40;
 
 function drawBlock(value, max, x, width) {
     const luminance = Math.floor((255 - (value / max) * 255));
@@ -11,7 +11,7 @@ function drawBlock(value, max, x, width) {
 }
 
 function calculateChecksum(values) {
-    // Sum up all the time values and then take modulo 256 to keep it within byte range
+    // Sum up all the time values and then take modulo 64 to keep it within byte range
     const sum = values.reduce((acc, val) => acc + val, 0);
     return sum % 64;
 }
@@ -29,17 +29,17 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw time blocks
-    drawBlock(hours, 6, 0, 20); // Hours
-    drawBlock(hours, 23, 20, 20); // Hours
-    drawBlock(minutes, 59, 40, 20); // Minutes
-    drawBlock(seconds, 59, 60, 20); // Seconds
-    drawBlock(deciseconds, 9, 80, 20); // Upper Deciseconds
-    drawBlock(centiseconds, 9, 100, 20); // Lower Centiseconds
+    drawBlock(hours, 6, 0, 40); // Hours
+    drawBlock(hours, 23, 40, 40); // Hours
+    drawBlock(minutes, 59, 80, 40); // Minutes
+    drawBlock(seconds, 59, 120, 40); // Seconds
+    drawBlock(deciseconds, 9, 160, 40); // Upper Deciseconds
+    drawBlock(centiseconds, 9, 200, 40); // Lower Centiseconds
 
     // Calculate and draw checksum block
     const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 120, 20); // Checksum block
+    drawBlock(checksum, 63, 240, 20); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
