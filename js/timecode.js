@@ -29,8 +29,8 @@ function calculateChecksum(values) {
 }
 
 function updateTime() {
-    const elasped = performance.now() - startTime;
-    const totalSeconds = Math.floor(elasped /1000)
+    const elapsed = performance.now() - startTime;
+    const totalSeconds = Math.floor(elapsed /1000)
     const hours = Math.floor(totalSeconds / 3600) % 24;
     const minutes = Math.floor((totalSeconds / 60) % 60);
     const seconds = totalSeconds % 60;
