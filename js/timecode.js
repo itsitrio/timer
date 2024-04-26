@@ -39,7 +39,7 @@ function updateTime() {
     // Calculate and draw checksum block
     const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 240, 20); // Checksum block
+    drawBlock(checksum, 63, 240, 40); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
