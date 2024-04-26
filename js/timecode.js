@@ -4,7 +4,7 @@ canvas.width = 320;
 canvas.height = 40;
 
 // Colors for drawing the colors
-const colors = ['red','green','blue','cyan','yellow','magenta','black','white']
+const colors = ['red','green','blue','black','cyan','yellow','magenta','white']
 
 function drawBlock(value, max, x, width) {
     const luminance = Math.floor((255 - (value / max) * 255));
