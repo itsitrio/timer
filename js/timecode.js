@@ -3,11 +3,14 @@ const ctx = canvas.getContext('2d');
 canvas.width = 320;
 canvas.height = 40;
 
+//define framerate expectation
+const frameRate = 60;
+
 // Colors for drawing the colors
 const colors = ['red','green','blue','black','cyan','yellow','magenta','white']
 
 function drawBlock(value, max, x, width) {
-    const luminance = Math.floor((255 - (value / max) * 255));
+    const luminance = Math.floor(255-(255 - (value / max) * 255));
     const color = `rgb(${luminance},${luminance},${luminance})`;
     ctx.fillStyle = color;
     ctx.fillRect(x, 0, width, canvas.height);
@@ -33,6 +36,7 @@ function updateTime() {
     const milliseconds = now.getMilliseconds();
     const deciseconds = Math.floor(milliseconds / 100);
     const centiseconds = Math.floor((milliseconds % 100) / 10);
+    const frames = Math.floor((milliseconds))
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -44,11 +48,12 @@ function updateTime() {
     drawBlock(seconds, 59, 160, 40); // Seconds
     drawBlock(deciseconds, 9, 200, 40); // Upper Deciseconds
     drawBlock(centiseconds, 9, 240, 40); // Lower Centiseconds
+    drawBlock(frames, frameRate - 1, 280, 40)
 
     // Calculate and draw checksum block
     const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
     const checksum = calculateChecksum(values);
-    drawBlock(checksum, 63, 280, 40); // Checksum block
+    //drawBlock(checksum, 63, 280, 40); // Checksum block
 
     requestAnimationFrame(updateTime);
 }
