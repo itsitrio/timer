@@ -29,7 +29,7 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw time blocks
-    drawBlock(hours, 6, 0, 40); // Hours
+    drawBlock(days, 6, 0, 40); // Hours
     drawBlock(hours, 23, 40, 40); // Hours
     drawBlock(minutes, 59, 80, 40); // Minutes
     drawBlock(seconds, 59, 120, 40); // Seconds
