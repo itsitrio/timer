@@ -24,7 +24,7 @@ function drawColorBlock(minute, x, width) {
 
 function drawText(text, x, width) {
     ctx.fillStyle = 'black';
-    ctx.font = '10px Arial';
+    ctx.font = '20px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(text, x, 20); // Adjusted to ensure text is in a visible part of the canvas
 }
