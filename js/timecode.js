@@ -26,7 +26,7 @@ function drawText(text, x, width) {
     ctx.fillStyle = 'black';
     ctx.font = '10px Arial';
     ctx.textAlign = 'left';
-    ctx.fillText(text, x, 50); // Adjusted to ensure text is in a visible part of the canvas
+    ctx.fillText(text, x, 20); // Adjusted to ensure text is in a visible part of the canvas
 }
 function calculateChecksum(values) {
     const sum = values.reduce((acc, val) => acc + val, 0);
