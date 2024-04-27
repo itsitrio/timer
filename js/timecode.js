@@ -1,7 +1,7 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = 320;
-canvas.height = 40;
+canvas.height = 80;
 
 //define framerate expectation & get current time for high precision
 const frameRate = 24;
@@ -44,9 +44,9 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawBlock(hours, 23, 0, 40); // Hours
-    drawBlock(minutes,59, 50, 40); // Minutes
-    drawBlock(seconds, 59, 100, 40); // Seconds
-    drawBlock(frames, frameRate - 1, 150, 40); // Frames
+    drawBlock(minutes,59, 40, 40); // Minutes
+    drawBlock(seconds, 59, 80, 40); // Seconds
+    drawBlock(frames, frameRate - 1, 120, 40); // Frames
 
     // Display SMPTE timecode as text
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
