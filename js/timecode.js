@@ -24,9 +24,9 @@ function drawColorBlock(minute, x, width) {
 
 function drawText(text, x, width) {
     ctx.fillStyle = 'white';
-    ctx.font = '20px monospace';
+    ctx.font = '30px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(text, x, 25); // Adjusted to ensure text is in a visible part of the canvas
+    ctx.fillText(text, x, 20); // Adjusted to ensure text is in a visible part of the canvas
 }
 function calculateChecksum(values) {
     const sum = values.reduce((acc, val) => acc + val, 0);
