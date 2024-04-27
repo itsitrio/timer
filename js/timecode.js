@@ -1,6 +1,6 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 800;
+canvas.width = 320;
 canvas.height = 40;
 
 //define framerate expectation & get current time for high precision
@@ -24,12 +24,11 @@ function drawColorBlock(minute, x, width) {
 
 function drawText(text, x, width) {
     ctx.fillStyle = 'black';
-    ctx.font = '20px Arial';
+    ctx.font = '10px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(text, x, 50); // Adjusted to ensure text is in a visible part of the canvas
 }
 function calculateChecksum(values) {
-    // Sum up all the time values and then take modulo 64 to keep it within byte range
     const sum = values.reduce((acc, val) => acc + val, 0);
     return sum % 64;
 }
@@ -44,49 +43,16 @@ function updateTime() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    drawBlock(hours,23,0,40);
-    drawBlock(minutes,23,40,40);
-    drawBlock(seconds,23,80,40);
-    drawBlock(frames,frameRate-1,120,40);
+    drawBlock(hours, 23, 0, 40); // Hours
+    drawBlock(minutes,59, 50, 40); // Minutes
+    drawBlock(seconds, 59, 100, 40); // Seconds
+    drawBlock(frames, frameRate - 1, 150, 40); // Frames
 
-    //text pls
+    // Display SMPTE timecode as text
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
-    drawText(timeString, 375, 425); // Adjusted for clarity
+    drawText(timeString, 250, 70); // Adjusted for new dimensions
 
     requestAnimationFrame(updateTime);
 }
-
-//Old Update Time that was based on current time, not page load time
-//function updateTime() {
-//    const now = new Date();
-//    const days = now.getUTCDay();
-//    const hours = now.getHours();
-//    const minutes = now.getMinutes();
-//    const seconds = now.getSeconds();
-//    const milliseconds = now.getMilliseconds();
-//    const deciseconds = Math.floor(milliseconds / 100);
-//    const centiseconds = Math.floor((milliseconds % 100) / 10);
-//    const frames = Math.floor((milliseconds/1000)*frameRate)
-//
-//    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//    /// Draw time blocks
-//    drawBlock(days, 6, 0, 40); // Hours
-//    drawBlock(hours, 23, 40, 40); // Hours
-//    drawColorBlock(minutes, 80, 40); // Minutes
-//    drawBlock(minutes, 59, 120, 40); // Minutes
-//    drawBlock(seconds, 59, 160, 40); // Seconds
-//    drawBlock(deciseconds, 9, 200, 40); // Upper Deciseconds
-//    drawBlock(centiseconds, 9, 240, 40); // Lower Centiseconds
-//    drawBlock(frames, frameRate - 1, 280, 40)
-//
-//    // Calculate and draw checksum block
-//    const values = [days,hours, minutes, seconds, deciseconds, centiseconds];
-//    const checksum = calculateChecksum(values);
-//    drawBlock(checksum, 63, 280, 40); // Checksum block
-//
-//    requestAnimationFrame(updateTime);
-//}
-
 
 requestAnimationFrame(updateTime);

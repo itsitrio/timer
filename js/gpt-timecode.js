@@ -1,17 +1,3 @@
-const canvas = document.getElementById('timecodeCanvas');
-const ctx = canvas.getContext('2d');
-canvas.width = 320;  // Adjusted width
-canvas.height = 80;  // Adjusted height
-
-// Define frame rate
-const frameRate = 30;
-
-// Start time reference
-const startTime = performance.now();
-
-// List of colors for the blocks
-const colors = ['red', 'green', 'blue', 'cyan', 'yellow', 'magenta', 'black', 'white'];
-
 function drawBlock(value, max, x, width) {
     const luminance = Math.floor((255 - (value / max) * 255));
     const color = `rgb(${luminance},${luminance},${luminance})`;
@@ -32,11 +18,6 @@ function drawText(text, x, width) {
     ctx.fillText(text, x, 50); // Ensure text fits in the height
 }
 
-function calculateChecksum(values) {
-    const sum = values.reduce((acc, val) => acc + val, 0);
-    return sum % 256;
-}
-
 function updateTime() {
     const elapsed = performance.now() - startTime;
     const totalSeconds = Math.floor(elapsed / 1000);
@@ -48,9 +29,9 @@ function updateTime() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Adjusted block widths for smaller canvas
-    drawBlock(hours, 23, 0, 50); // Hours
-    drawColorBlock(minutes, 50, 50); // Minutes
-    drawBlock(seconds, 59, 100, 50); // Seconds
+    drawBlock(hours, 23, 0, 40); // Hours
+    drawBlock(minutes,59, 50, 40); // Minutes
+    drawBlock(seconds, 59, 100, 40); // Seconds
     drawBlock(frames, frameRate - 1, 150, 50); // Frames
 
     const values = [hours, minutes, seconds, frames];
