@@ -1,6 +1,6 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 320;
+canvas.width = 800;
 canvas.height = 40;
 
 //define framerate expectation & get current time for high precision
@@ -22,11 +22,11 @@ function drawColorBlock(minute, x, width) {
     ctx.fillRect(x, 0, width, canvas.height);
 }
 
-function drawText(text,x,width) {
-    ctx.fillStyle = 'white';
-    ctx.font = '8px Arial';
-    ctx.textAlign ='center';
-    ctx.fillText(text,x,50)
+function drawText(text, x, width) {
+    ctx.fillStyle = 'black';
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, x, 50); // Adjusted to ensure text is in a visible part of the canvas
 }
 
 function calculateChecksum(values) {
@@ -51,8 +51,8 @@ function updateTime() {
     drawBlock(frames,frameRate-1,120,40);
 
     //text pls
-    const timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}:${frames.toString().padStart(2,'0')}`;
-    drawText(timeString, 140, 160);
+    const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
+    drawText(timeString, 160, 425); // Adjusted for clarity
 
     requestAnimationFrame(updateTime);
 }
