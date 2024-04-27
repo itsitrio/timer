@@ -37,7 +37,7 @@ function calculateChecksum(values) {
 
 function updateTime() {
     const elapsed = performance.now() - startTime;
-    const totalSeconds = Math.floor(elapsed /1000)
+    const totalSeconds = Math.floor(elapsed /1000);
     const hours = Math.floor(totalSeconds / 3600) % 24;
     const minutes = Math.floor((totalSeconds / 60) % 60);
     const seconds = totalSeconds % 60;
@@ -45,14 +45,14 @@ function updateTime() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    drawBlock(hours,23,0,40)
-    drawBlock(minutes,23,40,40)
-    drawBlock(seconds,23,80,40)
-    drawBlock(frames,frameRate-1,120,40)
+    drawBlock(hours,23,0,40);
+    drawBlock(minutes,23,40,40);
+    drawBlock(seconds,23,80,40);
+    drawBlock(frames,frameRate-1,120,40);
 
     //text pls
     const timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}:${frames.toString().padStart(2,'0')}`;
-    drawText(timeString, 140, 160)
+    drawText(timeString, 140, 160);
 
     requestAnimationFrame(updateTime);
 }
