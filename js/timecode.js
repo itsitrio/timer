@@ -23,7 +23,7 @@ function drawColorBlock(minute, x, width) {
 }
 
 function drawText(text, x, width) {
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     ctx.font = '20px monospace';
     ctx.textAlign = 'left';
     ctx.fillText(text, x, 30); // Adjusted to ensure text is in a visible part of the canvas
@@ -47,6 +47,7 @@ function updateTime() {
     drawBlock(minutes,59, 40, 40); // Minutes
     drawBlock(seconds, 59, 80, 40); // Seconds
     drawBlock(frames, frameRate - 1, 120, 40); // Frames
+    drawBlock(0, 1, 160, 120); // Frames
 
     // Display SMPTE timecode as text
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
