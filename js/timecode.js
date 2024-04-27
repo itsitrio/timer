@@ -1,7 +1,7 @@
 const canvas = document.getElementById('timecodeCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = 320;
-canvas.height = 80;
+canvas.height = 40;
 
 //define framerate expectation & get current time for high precision
 const frameRate = 24;
