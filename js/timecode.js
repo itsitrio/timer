@@ -50,7 +50,7 @@ function updateTime() {
 
     // Display SMPTE timecode as text
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
-    drawText(timeString, 250, 70); // Adjusted for new dimensions
+    drawText(timeString, 160, 120); // Adjusted for new dimensions
 
     requestAnimationFrame(updateTime);
 }
