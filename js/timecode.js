@@ -34,17 +34,18 @@ function calculateChecksum(values) {
 }
 
 function updateTime() {
-    //const elapsed = performance.now() - startTime;
-    //const totalSeconds = Math.floor(elapsed /1000);
-    //const hours = Math.floor(totalSeconds / 3600) % 24;
-    //const minutes = Math.floor((totalSeconds / 60) % 60);
-    //const seconds = totalSeconds % 60;
-    //const frames = Math.floor((elapsed % 1000) / (1000 / frameRate));
+    const elapsed = performance.now() - startTime;
+    const totalSeconds = Math.floor(elapsed /1000);
+    const hours = Math.floor(totalSeconds / 3600) % 24;
+    const minutes = Math.floor((totalSeconds / 60) % 60);
+    const seconds = totalSeconds % 60;
+    const frames = Math.floor((elapsed % 1000) / (1000 / frameRate));
 
-    const hours = 10
-    const minutes = 34;
-    const seconds = 15;
-    const frames = 20;
+    //Testing Block
+    //const hours = 10
+    //const minutes = 34;
+    //const seconds = 15;
+    //const frames = 20;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
