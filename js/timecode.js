@@ -24,9 +24,9 @@ function drawColorBlock(minute, x, width) {
 
 function drawText(text,x,width) {
     ctx.fillStyle = 'white';
-    ctx.font = 'bold 8px Arial';
+    ctx.font = '8px Arial';
     ctx.textAlign ='center';
-    ctx.fillText(text,x+width/2,60)
+    ctx.fillText(text,x,50)
 }
 
 function calculateChecksum(values) {
