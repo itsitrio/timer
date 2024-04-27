@@ -28,7 +28,6 @@ function drawText(text, x, width) {
     ctx.textAlign = 'left';
     ctx.fillText(text, x, 50); // Adjusted to ensure text is in a visible part of the canvas
 }
-
 function calculateChecksum(values) {
     // Sum up all the time values and then take modulo 64 to keep it within byte range
     const sum = values.reduce((acc, val) => acc + val, 0);
@@ -52,7 +51,7 @@ function updateTime() {
 
     //text pls
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
-    drawText(timeString, 160, 425); // Adjusted for clarity
+    drawText(timeString, 375, 425); // Adjusted for clarity
 
     requestAnimationFrame(updateTime);
 }
