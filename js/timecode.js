@@ -4,7 +4,7 @@ canvas.width = 320;
 canvas.height = 40;
 
 //define framerate expectation & get current time for high precision
-const frameRate = 24;
+const frameRate = 60;
 const startTime = performance.now();
 
 // Colors for drawing the colors
