@@ -25,7 +25,7 @@ function drawColorBlock(minute, x, width) {
 function drawText(text, x, width) {
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
-    ctx.textAlign = 'center';
+    ctx.textAlign = 'left';
     ctx.fillText(text, x, 30); // Adjusted to ensure text is in a visible part of the canvas
 }
 function calculateChecksum(values) {
@@ -50,7 +50,7 @@ function updateTime() {
 
     // Display SMPTE timecode as text
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${frames.toString().padStart(2, '0')}`;
-    drawText(timeString, 160, 120); // Adjusted for new dimensions
+    drawText(timeString, 165, 115); // Adjusted for new dimensions
 
     requestAnimationFrame(updateTime);
 }
