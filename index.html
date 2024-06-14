@@ -9,41 +9,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
 </head>
 <body>
-
-    <form id="wizardForm">
-        <label for="title">Countdown Title:</label>
-        <input type="text" id="title" name="title" placeholder="New Year Countdown">
-    
-        <label for="showClocks">Show Clocks:</label>
-        <select id="showClocks" name="showClocks">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-        </select>
-    
-        <label for="endDate">End Date:</label>
-        <input type="datetime-local" id="endDate" name="endDate">
-    
-        <label for="timezone">Timezone:</label>
-        <select id="timezone" name="timezone">
-            <optgroup label="Common Scheduling Timezones">
-                <option selected="selected" value="Local">Local Time</option>
-                <option value="America/New_York">WaterWolf (EST)</option>
-                <option value="Europe/London">EUFuria (GMT)</option>
-            </optgroup>
-            <optgroup label="Other Timezones">
-                <option value="America/Los_Angeles">Pacific</option>
-                <option value="America/Phoenix">Arizona</option>
-                <option value="America/Denver">Mountain</option>
-                <option value="America/Chicago">Central</option>
-                <option value="America/New_York">Eastern</option>
-                <option value="UTC">UTC</option>
-            </optgroup>
-            <!-- Add other timezones as needed -->
-        </select>
-    
-        <input type="submit" value="Create Countdown">
-    <div>A service made by Itrio</div>
-    </form>
+    <div id="wrapper">
+        <h1 class="pagetitle">Countdown Wizard</h1>
+        <form id="wizardForm">
+            <label for="title">Countdown Title:</label>
+            <input type="text" id="title" name="title" placeholder="New Year Countdown">
+        
+            <label for="showClocks">Show Clocks:</label>
+            <select id="showClocks" name="showClocks">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        
+            <label for="endDate">End Date:</label>
+            <input type="datetime-local" id="endDate" name="endDate">
+        
+            <label for="timezone">Timezone:</label>
+            <select id="timezone" name="timezone">
+                <optgroup label="Common Scheduling Timezones">
+                    <option selected="selected" value="Local">Local Time</option>
+                    <option value="America/New_York">WaterWolf (EST)</option>
+                    <option value="Europe/London">EUFuria (GMT)</option>
+                </optgroup>
+                <optgroup label="Other Timezones">
+                    <option value="America/Los_Angeles">Pacific</option>
+                    <option value="America/Phoenix">Arizona</option>
+                    <option value="America/Denver">Mountain</option>
+                    <option value="America/Chicago">Central</option>
+                    <option value="America/New_York">Eastern</option>
+                    <option value="UTC">UTC</option>
+                </optgroup>
+                <!-- Add other timezones as needed -->
+            </select>
+        
+            <input type="submit" value="Create Countdown">
+        </form>
+    <div id="creditbar">A service made by Itrio</div>
+    </div>
     <script>
         document.getElementById('wizardForm').onsubmit = function(e) {
             e.preventDefault();
