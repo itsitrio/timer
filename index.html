@@ -62,6 +62,23 @@
         </div>
     </form>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setHours(now.getHours() + 24); // Set to one hour in the future
+        
+            // Format the date and time for the datetime-local input which requires a specific format: YYYY-MM-DDTHH:MM
+            var year = now.getFullYear();
+            var month = ('0' + (now.getMonth() + 1)).slice(-2); // Months are 0-based
+            var day = ('0' + now.getDate()).slice(-2);
+            var hours = ('0' + now.getHours()).slice(-2);
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+            var dateTimeLocalValue = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+        
+            // Set the default value of the date/time input
+            document.getElementById('endDate').value = dateTimeLocalValue;
+        });
+    </script>
+    <script>
         document.getElementById('wizardForm').onsubmit = function(e) {
             e.preventDefault();
             const title = encodeURIComponent(document.getElementById('title').value);
@@ -83,7 +100,7 @@
             const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
             window.location.href = countdownUrl;
         };
-        </script>
+    </script>
         
 </body>
 </html>
