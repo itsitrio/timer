@@ -62,7 +62,7 @@ input[type="text"], input[type="datetime-local"], select {
 }
 
 select {
-    background-image: url('dropdown-arrow.png'); /* Add your custom arrow icon */
+    background-image: url('./img/drop-down-arrow.png'); /* Add your custom arrow icon */
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
@@ -99,8 +99,8 @@ img.sqrllogo-sm {
 }
 
 input, select, textarea {
-    -webkit-border-radius: 0;
-    border-radius: 0;
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
