@@ -20,6 +20,7 @@ body, html {
 
 #countdownTitle {
     font-size: 4rem;
+    color: var(--text-color);
     margin:0;
 }
 
@@ -28,8 +29,6 @@ body, html {
 }
 
 .countdown h1 {
-    font-size: 2em;
-    color: #ffa629;
 }
 
 .time-container {
