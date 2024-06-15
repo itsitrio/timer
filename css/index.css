@@ -21,7 +21,7 @@ a:hover {
 div.wrapper {
     background: #111;
     margin:1rem;
-    padding: 20px; display:;
+    padding: 20px; display:block;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
