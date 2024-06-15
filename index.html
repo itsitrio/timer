@@ -7,54 +7,93 @@
     <link rel="stylesheet" href="./css/index.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 <body>
-    <div id="wrapper">
-        <h1 class="pagetitle">Countdown Wizard</h1>
-        <form id="wizardForm">
-            <label for="title">Countdown Title:</label>
-            <input type="text" id="title" name="title" placeholder="New Year Countdown">
-        
-            <label for="showClocks">Show Clocks:</label>
+    <form id="wizardForm">
+        <div class="wrapper">
+            <h1 class="pagetitle">Countdown Wizard</h1>
+
+                <label for="title">Countdown Title:</label>
+                <input type="text" id="title" name="title" placeholder="New Year Countdown">
+
+            
+                <label for="endDate">End Date:</label>
+                <input type="datetime-local" id="endDate" name="endDate">
+            
+                <label for="timezone">Timezone:</label>
+                <select id="timezone" name="timezone">
+                    <optgroup label="Common Scheduling Timezones">
+                        <option selected="selected" value="Local">Local Time</option>
+                        <option value="America/New_York">WaterWolf (EST)</option>
+                        <option value="Europe/London">EUFuria (GMT)</option>
+                    </optgroup>
+                    <optgroup label="Other Timezones">
+                        <option value="America/Los_Angeles">Pacific</option>
+                        <option value="America/Phoenix">Arizona</option>
+                        <option value="America/Denver">Mountain</option>
+                        <option value="America/Chicago">Central</option>
+                        <option value="America/New_York">Eastern</option>
+                        <option value="UTC">UTC</option>
+                    </optgroup>
+                    <!-- Add other timezones as needed -->
+                </select>
+            
+                <div class="button-container">
+                    <input type="submit" value="Create Countdown">
+                    <button type="button" id="toggleDisplaySettings" class="toggle-button"><i class="fas fa-cog"></i></button>
+                </div>
+            <div id="creditbar"><a href="https://itrio.pet">
+                <p>A service made by Itrio</p>
+                <img class="sqrllogo-sm" src="./img/SQRLWhite@0.5x.png"></a>
+            </div>
+        </div>
+        <div class="wrapper" id="displaySettings" style="display: none;">            <h1 class="pagetitle">Display Options</h1>
+            <label for="textColor">Text Color:</label>
+            <select id="textColor" name="textColor">
+                <option value="#ffa629">Gold</option>
+                <option value="#ffffff">White</option>
+                <option value="#ff6347">Tomato</option>
+                <option value="#00ff00">Lime</option>
+            </select>
+            <label for="showClocks">Show Club Clocks:</label>
             <select id="showClocks" name="showClocks">
-                <option value="true">Yes</option>
                 <option value="false">No</option>
+                <option value="true">Yes</option>
             </select>
-        
-            <label for="endDate">End Date:</label>
-            <input type="datetime-local" id="endDate" name="endDate">
-        
-            <label for="timezone">Timezone:</label>
-            <select id="timezone" name="timezone">
-                <optgroup label="Common Scheduling Timezones">
-                    <option selected="selected" value="Local">Local Time</option>
-                    <option value="America/New_York">WaterWolf (EST)</option>
-                    <option value="Europe/London">EUFuria (GMT)</option>
-                </optgroup>
-                <optgroup label="Other Timezones">
-                    <option value="America/Los_Angeles">Pacific</option>
-                    <option value="America/Phoenix">Arizona</option>
-                    <option value="America/Denver">Mountain</option>
-                    <option value="America/Chicago">Central</option>
-                    <option value="America/New_York">Eastern</option>
-                    <option value="UTC">UTC</option>
-                </optgroup>
-                <!-- Add other timezones as needed -->
-            </select>
-        
-            <input type="submit" value="Create Countdown">
-        </form>
-    <div id="creditbar"><a href="https://itrio.pet">
-        <p>A service made by Itrio</p>
-        <img class="sqrllogo-sm" src="./img/SQRLWhite@0.5x.png"></a>
-    </div>
+        </div>
+    </form>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var now = new Date();
+            now.setHours(now.getHours() + 24); // Set to one hour in the future
+        
+            // Format the date and time for the datetime-local input which requires a specific format: YYYY-MM-DDTHH:MM
+            var year = now.getFullYear();
+            var month = ('0' + (now.getMonth() + 1)).slice(-2); // Months are 0-based
+            var day = ('0' + now.getDate()).slice(-2);
+            var hours = ('0' + now.getHours()).slice(-2);
+            var minutes = ('0' + now.getMinutes()).slice(-2);
+            var dateTimeLocalValue = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+        
+            // Set the default value of the date/time input
+            document.getElementById('endDate').value = dateTimeLocalValue;
+        });
+    </script>
+    <script>
+        document.getElementById('toggleDisplaySettings').addEventListener('click', function() {
+            var displaySettings = document.getElementById('displaySettings');
+            displaySettings.style.display = (displaySettings.style.display === 'none') ? 'block' :  'none';
+        });
+    </script>
+        <script>
         document.getElementById('wizardForm').onsubmit = function(e) {
             e.preventDefault();
             const title = encodeURIComponent(document.getElementById('title').value);
             const showClocks = document.getElementById('showClocks').value;
             const endDateInput = document.getElementById('endDate').value;
             const timezone = document.getElementById('timezone').value;
+            const textColor = document.getElementById('textColor').value;
         
             // Convert the selected date and time to the chosen timezone, then to UTC
             let endDateUTC;
@@ -66,10 +105,10 @@
                 endDateUTC = moment.tz(endDateInput, timezone).utc().format();
             }
         
-            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}`;
+            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
             window.location.href = countdownUrl;
         };
-        </script>
+    </script>
         
 </body>
 </html>

@@ -1,16 +1,35 @@
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
     color: #ffa629;
     background-color: #050505;
 }
 
+#wizardForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    width: 100%;
+}
+
+div.wrapper {
+    background: #111;
+    margin: 1rem;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 0 0 300px;
+    width: 300px;
+}
+
 a {
-    color:inherit;
+    color: inherit;
     text-decoration: none;
 }
 
@@ -18,16 +37,9 @@ a:hover {
     text-decoration: underline;
 }
 
-div#wrapper {
-    background: #111;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
 div#creditbar {
     text-align: center;
-    width:100%;
+    width: 100%;
 }
 
 label {
@@ -35,7 +47,7 @@ label {
     margin: 6px 0 3px 0;
 }
 
-input[type=text], input[type=datetime-local], select {
+input[type="text"], input[type="datetime-local"], select {
     width: 100%;
     padding: 8px;
     margin: 8px 0;
@@ -43,10 +55,21 @@ input[type=text], input[type=datetime-local], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    -webkit-appearance: none; /* Disables the default iOS styling */
+    font-size: 16px;
+    color: black;
+    background-color: white;
 }
 
-input[type=submit] {
-    width: 100%;
+select {
+    background-image: url('./img/drop-down-arrow.png'); /* Add your custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+input[type="submit"] {
+    width: 68%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -56,10 +79,55 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
     background-color: #45a049;
 }
 
 img.sqrllogo-sm {
     max-height: 3rem;
+}
+
+@media (max-width: 768px) {
+    #wizardForm {
+        flex-direction: column;
+    }
+    div.wrapper {
+        flex-basis: auto;
+        flex-grow: 1;
+        margin: 1rem auto;
+    }
+}
+
+input, select, textarea {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Adjust spacing between buttons */
+}
+
+button.toggle-button {
+    width: 28%; /* Adjust width to fit side by side */
+    background-color: #4c8baf;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+button.toggle-button:hover {
+    background-color: #4565a0;
+}
+
+button.toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
