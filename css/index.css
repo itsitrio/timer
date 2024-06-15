@@ -8,6 +8,8 @@ html, body {
     color: #ffa629;
     background-color: #050505;
     background-image: url("/img/background.jpg");
+    background-size: cover;
+    background-position: bottom;
 }
 
 #wizardForm {
@@ -63,7 +65,7 @@ input[type="text"], input[type="datetime-local"], select {
 }
 
 select {
-    background-image: url('/img/drop-down-arrow.png'); /* Add your custom arrow icon */
+    background-image: url('./img/drop-down-arrow.png'); /* Add your custom arrow icon */
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
