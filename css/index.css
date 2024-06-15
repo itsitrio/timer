@@ -15,7 +15,7 @@ html, body {
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
-    width: 100%; /* Ensures the form takes full width of its container */
+    width: 100%;
 }
 
 div.wrapper {
@@ -24,8 +24,7 @@ div.wrapper {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    flex: 0 0 300px; /* Flex-grow, flex-shrink, and basis set to 300px */
-    width: 300px !important; /* Optional: ensure they do not grow too large */
+    flex: 1 1 300px;
 }
 
 a {
@@ -55,6 +54,17 @@ input[type="text"], input[type="datetime-local"], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    -webkit-appearance: none; /* Disables the default iOS styling */
+    font-size: 16px;
+    color: black;
+    background-color: white;
+}
+
+select {
+    background-image: url('dropdown-arrow.png'); /* Add your custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
 }
 
 input[type="submit"] {
@@ -79,11 +89,17 @@ img.sqrllogo-sm {
 @media (max-width: 768px) {
     #wizardForm {
         flex-direction: column;
-        padding: 0; /* Removes padding to ensure full-width utilization */
     }
     div.wrapper {
-        flex-basis: auto; /* Adjusts flex-basis to take the necessary width */
-        flex-grow: 1; /* Ensures each wrapper takes full width */
-        margin: 1rem auto; /* Centers the div and maintains margin */
+        flex-basis: auto;
+        flex-grow: 1;
+        margin: 1rem auto;
     }
+}
+
+input, select, textarea {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
