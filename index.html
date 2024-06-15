@@ -52,7 +52,13 @@
         </div>
         <div class="wrapper">
             <h1 class="pagetitle">Display Options</h1>
-
+            <label for="textColor">Text Color:</label>
+                <select id="textColor" name="textColor">
+                    <option value="#ffa629">Gold</option>
+                    <option value="#ffffff">White</option>
+                    <option value="#ff6347">Tomato</option>
+                    <option value="#00ff00">Lime</option>
+                </select>
         </div>
     </form>
     <script>
@@ -62,6 +68,7 @@
             const showClocks = document.getElementById('showClocks').value;
             const endDateInput = document.getElementById('endDate').value;
             const timezone = document.getElementById('timezone').value;
+            const textColor = document.getElementById('textColor').value;
         
             // Convert the selected date and time to the chosen timezone, then to UTC
             let endDateUTC;
@@ -73,7 +80,7 @@
                 endDateUTC = moment.tz(endDateInput, timezone).utc().format();
             }
         
-            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}`;
+            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
             window.location.href = countdownUrl;
         };
         </script>

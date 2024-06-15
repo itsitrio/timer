@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const endDate = getDateFromURL();
+    const textColor = getColorFromURL();
+    document.documentElement.style.setProperty('--text-color', textColor);
     document.getElementById('countdownTitle').textContent = getTitleFromURL() || 'Countdown Timer';
     const timezone = getTimezoneFromURL(); // Implement similar to getTitleFromURL
     displayTargetTimes(endDate, timezone); // Make sure to define this function
@@ -14,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
+}
+
+function getColorFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('color') || '#ffa629'; // Default color if none specified
 }
 
 function getDateFromURL() {
