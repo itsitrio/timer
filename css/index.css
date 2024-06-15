@@ -1,10 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
     display: flex;
+    /*padding: 20px;
     justify-content: center;
     align-items: center;
-    /*height: 100vh;*/
+    height: 100vh;*/
     color: #ffa629;
     background-color: #050505;
 }
@@ -18,10 +18,11 @@ a:hover {
     text-decoration: underline;
 }
 
-div#wrapper {
+div.wrapper {
     background: #111;
-    padding: 20px;
-    border-radius: 5px;
+    margin:1rem;
+    padding: 20px; display:;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
