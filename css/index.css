@@ -1,16 +1,35 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
-    /*padding: 20px;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;*/
+    flex-direction: column;
+    font-family: Arial, sans-serif;
     color: #ffa629;
     background-color: #050505;
 }
 
+#wizardForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%; /* Ensures the form takes full width of its container */
+}
+
+div.wrapper {
+    background: #111;
+    margin: 1rem;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 0 0 300px; /* Flex-grow, flex-shrink, and basis set to 300px */
+    width: 300px !important; /* Optional: ensure they do not grow too large */
+}
+
 a {
-    color:inherit;
+    color: inherit;
     text-decoration: none;
 }
 
@@ -18,17 +37,9 @@ a:hover {
     text-decoration: underline;
 }
 
-div.wrapper {
-    background: #111;
-    margin:1rem;
-    padding: 20px; display:block;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
 div#creditbar {
     text-align: center;
-    width:100%;
+    width: 100%;
 }
 
 label {
@@ -36,7 +47,7 @@ label {
     margin: 6px 0 3px 0;
 }
 
-input[type=text], input[type=datetime-local], select {
+input[type="text"], input[type="datetime-local"], select {
     width: 100%;
     padding: 8px;
     margin: 8px 0;
@@ -46,7 +57,7 @@ input[type=text], input[type=datetime-local], select {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type="submit"] {
     width: 100%;
     background-color: #4CAF50;
     color: white;
@@ -57,10 +68,22 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type="submit"]:hover {
     background-color: #45a049;
 }
 
 img.sqrllogo-sm {
     max-height: 3rem;
+}
+
+@media (max-width: 768px) {
+    #wizardForm {
+        flex-direction: column;
+        padding: 0; /* Removes padding to ensure full-width utilization */
+    }
+    div.wrapper {
+        flex-basis: auto; /* Adjusts flex-basis to take the necessary width */
+        flex-grow: 1; /* Ensures each wrapper takes full width */
+        margin: 1rem auto; /* Centers the div and maintains margin */
+    }
 }

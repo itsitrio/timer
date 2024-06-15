@@ -16,11 +16,6 @@
                 <label for="title">Countdown Title:</label>
                 <input type="text" id="title" name="title" placeholder="New Year Countdown">
 
-                <label for="showClocks">Show Clocks:</label>
-                <select id="showClocks" name="showClocks">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
             
                 <label for="endDate">End Date:</label>
                 <input type="datetime-local" id="endDate" name="endDate">
@@ -53,12 +48,17 @@
         <div class="wrapper">
             <h1 class="pagetitle">Display Options</h1>
             <label for="textColor">Text Color:</label>
-                <select id="textColor" name="textColor">
-                    <option value="#ffa629">Gold</option>
-                    <option value="#ffffff">White</option>
-                    <option value="#ff6347">Tomato</option>
-                    <option value="#00ff00">Lime</option>
-                </select>
+            <select id="textColor" name="textColor">
+                <option value="#ffa629">Gold</option>
+                <option value="#ffffff">White</option>
+                <option value="#ff6347">Tomato</option>
+                <option value="#00ff00">Lime</option>
+            </select>
+            <label for="showClocks">Show Club Clocks:</label>
+            <select id="showClocks" name="showClocks">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+            </select>
         </div>
     </form>
     <script>
