@@ -69,7 +69,7 @@ select {
 }
 
 input[type="submit"] {
-    width: 100%;
+    width: 68%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -105,17 +105,29 @@ input, select, textarea {
     box-shadow: none;
 }
 
-input[type="submit"], button.toggle-button {
-    width: 100%;
-    background-color: #4CAF50;
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Adjust spacing between buttons */
+}
+
+button.toggle-button {
+    width: 28%; /* Adjust width to fit side by side */
+    background-color: #4c8baf;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    text-align: center;
 }
 
-input[type="submit"]:hover, button.toggle-button:hover {
-    background-color: #45a049;
+button.toggle-button:hover {
+    background-color: #4565a0;
+}
+
+button.toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

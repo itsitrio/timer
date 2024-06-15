@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/index.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 <body>
     <form id="wizardForm">
@@ -38,16 +39,16 @@
                     <!-- Add other timezones as needed -->
                 </select>
             
-                <input type="submit" value="Create Countdown">
-                <button type="button" id="toggleDisplaySettings" class="toggle-button">Show Display Settings</button>
-
+                <div class="button-container">
+                    <input type="submit" value="Create Countdown">
+                    <button type="button" id="toggleDisplaySettings" class="toggle-button"><i class="fas fa-cog"></i></button>
+                </div>
             <div id="creditbar"><a href="https://itrio.pet">
                 <p>A service made by Itrio</p>
                 <img class="sqrllogo-sm" src="./img/SQRLWhite@0.5x.png"></a>
             </div>
         </div>
-        <div class="wrapper" id="displaySettings" style="display: none;">
-            <h1 class="pagetitle">Display Options</h1>
+        <div class="wrapper" id="displaySettings" style="display: none;">            <h1 class="pagetitle">Display Options</h1>
             <label for="textColor">Text Color:</label>
             <select id="textColor" name="textColor">
                 <option value="#ffa629">Gold</option>
@@ -82,16 +83,10 @@
     <script>
         document.getElementById('toggleDisplaySettings').addEventListener('click', function() {
             var displaySettings = document.getElementById('displaySettings');
-            if (displaySettings.style.display === 'none') {
-                displaySettings.style.display = 'block';
-                this.textContent = 'Hide Display Settings'; // Change button text
-            } else {
-                displaySettings.style.display = 'none';
-                this.textContent = 'Show Display Settings'; // Change button text back
-            }
+            displaySettings.style.display = (displaySettings.style.display === 'none') ? 'block' :  'none';
         });
-    </script>        
-    <script>
+    </script>
+        <script>
         document.getElementById('wizardForm').onsubmit = function(e) {
             e.preventDefault();
             const title = encodeURIComponent(document.getElementById('title').value);
