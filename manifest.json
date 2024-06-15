@@ -1,13 +1,11 @@
 { 
 
-  "name": "Simple Countdown", 
-
-  "short_name": "Countdown", 
-
-  "start_url": "https://timer.pet", 
-
-  "display": "fullscreen", 
-  "background_color": "#222222",
+  "name": "Simple Countdown",
+  "short_name": "Countdown",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "fullscreen",
+  "start_url": "https://timer.pet"
 
   "icons": [{ 
 
