@@ -1,0 +1,21 @@
+{ 
+
+  "name": "Simple Countdown", 
+
+  "short_name": "Countdown", 
+
+  "start_url": "https://timer.pet", 
+
+  "display": "standalone", 
+
+  "icons": [{ 
+
+    "src": "/img/TimerPet.png", 
+
+    "sizes": "512x512", 
+
+    "type": "image/png" 
+
+  }] 
+
+}
