@@ -11,7 +11,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     setInterval(() => updateAll(endDate), 1000);
     updateAll(endDate); // Initial call to avoid delay
+
+    // Show the copy button on mouse move
+    let timeout;
+    document.addEventListener('mousemove', function() {
+        document.getElementById('copyTimestampButton').style.display = 'block';
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            document.getElementById('copyTimestampButton').style.display = 'none';
+        }, 30000); // 30 seconds
+    });
+
+    // Calculate and set the Discord timestamp
+    const unixTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
+    document.getElementById('copyTimestampButton').setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
 });
+
+function copyToClipboard() {
+    const timestamp = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
+    navigator.clipboard.writeText(timestamp).then(function() {
+        alert('Copied the timestamp: ' + timestamp);
+    }, function(err) {
+        alert('Failed to copy the timestamp');
+    });
+}
 
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -34,6 +57,7 @@ function getShowClocksFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('showClocks') === 'true';
 }
+
 function getTimezoneFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const timezone = urlParams.get('timezone');

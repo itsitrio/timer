@@ -79,3 +79,17 @@ body, html {
     font-weight:200px;
     margin:15px 0;
 }
+
+#copyTimestampButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#copyTimestampButton:hover {
+    background-color: #45a049;
+}
