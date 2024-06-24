@@ -13,38 +13,49 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAll(endDate); // Initial call to avoid delay
 
     // Set button color based on text color
-    const button = document.getElementById('copyTimestampButton');
-    button.style.backgroundColor = textColor;
+    const timestampButton = document.getElementById('copyTimestampButton');
+    timestampButton.style.backgroundColor = textColor;
 
-    // Show the copy button on mouse move
+    const shortUrlButton = document.getElementById('copyShortUrlButton');
+    shortUrlButton.style.backgroundColor = textColor;
+
+    // Show the copy buttons on mouse move
     let timeout;
     document.addEventListener('mousemove', function() {
-        button.style.display = 'block';
+        timestampButton.style.display = 'block';
+        shortUrlButton.style.display = 'block';
         clearTimeout(timeout);
         timeout = setTimeout(function() {
-            button.style.display = 'none';
+            timestampButton.style.display = 'none';
+            shortUrlButton.style.display = 'none';
         }, 30000); // 30 seconds
     });
 
     // Calculate and set the Discord timestamp
     const unixTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
-    button.setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
+    timestampButton.setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
 
     // Display the shortId if present
     const shortId = getShortIdFromURL();
     if (shortId) {
-        const shortIdDisplay = document.getElementById('shortIdDisplay');
-        document.getElementById('shortId').textContent = shortId;
-        shortIdDisplay.style.display = 'block';
+        const shortUrl = `https://yourdomain.com/${shortId}`;
+        shortUrlButton.setAttribute('data-url', shortUrl);
+        shortUrlButton.style.display = 'block';
     }
 });
 
-function copyToClipboard() {
-    const timestamp = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
-    navigator.clipboard.writeText(timestamp).then(function() {
-        alert('Copied the timestamp: ' + timestamp);
+function copyToClipboard(type) {
+    let text;
+    if (type === 'timestamp') {
+        text = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
+    } else if (type === 'shortUrl') {
+        text = document.getElementById('copyShortUrlButton').getAttribute('data-url');
+    }
+
+    navigator.clipboard.writeText(text).then(function() {
+        alert(`Copied the ${type}: ${text}`);
     }, function(err) {
-        alert('Failed to copy the timestamp');
+        alert(`Failed to copy the ${type}`);
     });
 }
 
