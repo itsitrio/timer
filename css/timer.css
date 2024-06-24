@@ -111,3 +111,12 @@ body, html {
 .target-time-container div {
     margin-bottom: 10px; /* Space between items */
 }
+
+button.success {
+    background-color: #4CAF50; /* Green background */
+}
+
+button.success::after {
+    content: "✓"; /* Checkmark */
+    color: white;
+}

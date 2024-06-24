@@ -46,19 +46,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function copyToClipboard(type) {
     let text;
+    let button;
     if (type === 'timestamp') {
-        text = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
+        button = document.getElementById('copyTimestampButton');
+        text = button.getAttribute('data-timestamp');
     } else if (type === 'shortUrl') {
-        text = document.getElementById('copyShortUrlButton').getAttribute('data-url');
+        button = document.getElementById('copyShortUrlButton');
+        text = button.getAttribute('data-url');
     }
 
     navigator.clipboard.writeText(text).then(function() {
-        //alert(`Copied the ${type}: ${text}`);
+        button.classList.add('success');
+        button.textContent = '';
+        setTimeout(() => {
+            button.classList.remove('success');
+            button.textContent = type === 'timestamp' ? 'Copy Discord Timestamp' : 'Copy Short URL';
+        }, 3000);
     }, function(err) {
         alert(`Failed to copy the ${type}`);
     });
 }
-
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
