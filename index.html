@@ -120,7 +120,7 @@
         const countdownUrl = `https://timer.pet/timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
     
         try {
-            const response = await fetch('https://shorturls.itrio.workers.dev/shorten', {
+            const response = await fetch('https://getmy.timer.pet/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: countdownUrl })
