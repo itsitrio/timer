@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function copyToClipboard() {
     const timestamp = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
     navigator.clipboard.writeText(timestamp).then(function() {
-        alert('Copied the timestamp: ' + timestamp);
+        //alert('Copied the timestamp: ' + timestamp);
     }, function(err) {
         alert('Failed to copy the timestamp');
     });
