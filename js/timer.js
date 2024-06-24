@@ -12,19 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(() => updateAll(endDate), 1000);
     updateAll(endDate); // Initial call to avoid delay
 
+    // Set button color based on text color
+    const button = document.getElementById('copyTimestampButton');
+    button.style.backgroundColor = textColor;
+
     // Show the copy button on mouse move
     let timeout;
     document.addEventListener('mousemove', function() {
-        document.getElementById('copyTimestampButton').style.display = 'block';
+        button.style.display = 'block';
         clearTimeout(timeout);
         timeout = setTimeout(function() {
-            document.getElementById('copyTimestampButton').style.display = 'none';
+            button.style.display = 'none';
         }, 30000); // 30 seconds
     });
 
     // Calculate and set the Discord timestamp
     const unixTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
-    document.getElementById('copyTimestampButton').setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
+    button.setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
 });
 
 function copyToClipboard() {
