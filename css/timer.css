@@ -85,7 +85,6 @@ body, html {
     color: white;
     padding: 10px 20px;
     margin-top: 10px;
-    margin-left: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -97,11 +96,12 @@ body, html {
 
 .target-time-container {
     display: flex;
+    flex-direction: column; /* Stack items vertically */
     align-items: center;
     justify-content: center;
     margin-top: 20px;
 }
 
 .target-time-container div {
-    margin-right: 10px;
+    margin-bottom: 10px; /* Space between items */
 }
