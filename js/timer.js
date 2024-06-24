@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display the shortId if present
     const shortId = getShortIdFromURL();
     if (shortId) {
-        const shortUrl = `https://yourdomain.com/${shortId}`;
+        const shortUrl = `https://getmy.timer.pet/${shortId}`;
         shortUrlButton.setAttribute('data-url', shortUrl);
         shortUrlButton.style.display = 'block';
     }

@@ -85,6 +85,7 @@ body, html {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-right: 10px; /* Add margin to separate buttons */
 }
 
 #copyTimestampButton:hover, #copyShortUrlButton:hover {
@@ -99,7 +100,14 @@ body, html {
     margin-top: 20px;
 }
 
-.target-time-container div, .target-time-container button {
-    margin-bottom: 10px; /* Space between items */
+.button-container {
+    display: flex;
+    flex-direction: row; /* Place items in a row */
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 }
 
+.target-time-container div {
+    margin-bottom: 10px; /* Space between items */
+}
