@@ -53,7 +53,7 @@ function copyToClipboard(type) {
     }
 
     navigator.clipboard.writeText(text).then(function() {
-        alert(`Copied the ${type}: ${text}`);
+        //alert(`Copied the ${type}: ${text}`);
     }, function(err) {
         alert(`Failed to copy the ${type}`);
     });
