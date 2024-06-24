@@ -69,6 +69,14 @@
                 <option value="true">Yes</option>
             </select>
         </div>
+        <!-- Inside the <form id="wizardForm"> -->
+        <div class="wrapper" id="discordTimestamps" style="display: none;">
+            <h1 class="pagetitle">Discord Timestamps</h1>
+            <label for="timestamp">Discord Timestamp:</label>
+            <input type="text" id="timestamp" name="timestamp" readonly>
+            <button type="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+
     </form>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -115,6 +123,44 @@
             const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
             window.location.href = countdownUrl;
         };
+
+        document.getElementById('wizardForm').onsubmit = function(e) {
+            e.preventDefault();
+            const title = encodeURIComponent(document.getElementById('title').value);
+            const showClocks = document.getElementById('showClocks').value;
+            const endDateInput = document.getElementById('endDate').value;
+            const timezone = document.getElementById('timezone').value;
+            const textColor = document.getElementById('textColor').value;
+                
+            // Convert the selected date and time to the chosen timezone, then to UTC
+            let endDateUTC;
+            if (timezone === 'Local') {
+                // For local time, just convert the input date to UTC
+                endDateUTC = moment(endDateInput).utc().format();
+            } else {
+                // For other timezones, first interpret the date in the selected timezone, then convert to      UTC
+                endDateUTC = moment.tz(endDateInput, timezone).utc().format();
+            }
+        
+            // Display the Discord timestamp section
+            document.getElementById('discordTimestamps').style.display = 'block';
+        
+            // Calculate the Unix timestamp
+            const unixTimestamp = Math.floor(new Date(endDateUTC).getTime() / 1000);
+            document.getElementById('timestamp').value = `<t:${unixTimestamp}:R>`;
+        
+            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent       (endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
+            window.location.href = countdownUrl;
+        };
+        
+        function copyToClipboard() {
+            const copyText = document.getElementById('timestamp');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("Copied the timestamp: " + copyText.value);
+        }
+
     </script>
         
 </body>
