@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const textColor = getColorFromURL();
     document.documentElement.style.setProperty('--text-color', textColor);
     document.getElementById('countdownTitle').textContent = getTitleFromURL() || 'Countdown Timer';
-    const timezone = getTimezoneFromURL(); // Implement similar to getTitleFromURL
-    displayTargetTimes(endDate, timezone); // Make sure to define this function
+    const timezone = getTimezoneFromURL();
+    displayTargetTimes(endDate, timezone);
     const showClocks = getShowClocksFromURL();
     if (!showClocks) {
         document.querySelector('.timezone-display').style.display = 'none';
@@ -29,12 +29,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Calculate and set the Discord timestamp
     const unixTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
     button.setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
+
+    // Display the shortId if present
+    const shortId = getShortIdFromURL();
+    if (shortId) {
+        const shortIdDisplay = document.getElementById('shortIdDisplay');
+        document.getElementById('shortId').textContent = shortId;
+        shortIdDisplay.style.display = 'block';
+    }
 });
 
 function copyToClipboard() {
     const timestamp = document.getElementById('copyTimestampButton').getAttribute('data-timestamp');
     navigator.clipboard.writeText(timestamp).then(function() {
-        //alert('Copied the timestamp: ' + timestamp);
+        alert('Copied the timestamp: ' + timestamp);
     }, function(err) {
         alert('Failed to copy the timestamp');
     });
@@ -66,6 +74,11 @@ function getTimezoneFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const timezone = urlParams.get('timezone');
     return timezone ? decodeURIComponent(timezone) : 'UTC'; // Default to 'UTC' if not specified
+}
+
+function getShortIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('shortId');
 }
 
 function updateAll(endDate) {
