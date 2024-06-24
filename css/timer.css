@@ -28,9 +28,6 @@ body, html {
     margin: 20px 0;
 }
 
-.countdown h1 {
-}
-
 .time-container {
     display: flex;
     justify-content: center;
