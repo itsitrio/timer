@@ -54,7 +54,8 @@
                 <img class="sqrllogo-sm" src="./img/SQRLWhite@0.5x.png"></a>
             </div>
         </div>
-        <div class="wrapper" id="displaySettings" style="display: none;">            <h1 class="pagetitle">Display Options</h1>
+        <div class="wrapper" id="displaySettings" style="display: none;">
+            <h1 class="pagetitle">Display Options</h1>
             <label for="textColor">Text Color:</label>
             <select id="textColor" name="textColor">
                 <option value="#7000ff">Becki</option>
@@ -69,6 +70,7 @@
                 <option value="true">Yes</option>
             </select>
         </div>
+
     </form>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -93,29 +95,49 @@
             displaySettings.style.display = (displaySettings.style.display === 'none') ? 'block' :  'none';
         });
     </script>
-        <script>
-        document.getElementById('wizardForm').onsubmit = function(e) {
-            e.preventDefault();
-            const title = encodeURIComponent(document.getElementById('title').value);
-            const showClocks = document.getElementById('showClocks').value;
-            const endDateInput = document.getElementById('endDate').value;
-            const timezone = document.getElementById('timezone').value;
-            const textColor = document.getElementById('textColor').value;
-        
-            // Convert the selected date and time to the chosen timezone, then to UTC
-            let endDateUTC;
-            if (timezone === 'Local') {
-                // For local time, just convert the input date to UTC
-                endDateUTC = moment(endDateInput).utc().format();
-            } else {
-                // For other timezones, first interpret the date in the selected timezone, then convert to UTC
-                endDateUTC = moment.tz(endDateInput, timezone).utc().format();
+<script>
+    document.getElementById('wizardForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const title = encodeURIComponent(document.getElementById('title').value);
+        const showClocks = document.getElementById('showClocks').value;
+        const endDateInput = document.getElementById('endDate').value;
+        const timezone = document.getElementById('timezone').value;
+        const textColor = document.getElementById('textColor').value;
+    
+        let endDateUTC;
+        if (timezone === 'Local') {
+            endDateUTC = moment(endDateInput).utc().format();
+        } else {
+            endDateUTC = moment.tz(endDateInput, timezone).utc().format();
+        }
+    
+        const countdownUrl = `https://timer.pet/timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
+    
+        try {
+            const response = await fetch('https://getmy.timer.pet/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: countdownUrl })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        
-            const countdownUrl = `timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
-            window.location.href = countdownUrl;
-        };
+    
+            const data = await response.json();
+            console.log("Shortened URL data:", data);
+            if (data.shortUrl) {
+                window.location.href = data.shortUrl;
+            } else {
+                alert('Failed to shorten URL');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to shorten URL');
+        }
+    };
     </script>
-        
+    
+            
 </body>
 </html>

@@ -3,16 +3,69 @@ document.addEventListener('DOMContentLoaded', function() {
     const textColor = getColorFromURL();
     document.documentElement.style.setProperty('--text-color', textColor);
     document.getElementById('countdownTitle').textContent = getTitleFromURL() || 'Countdown Timer';
-    const timezone = getTimezoneFromURL(); // Implement similar to getTitleFromURL
-    displayTargetTimes(endDate, timezone); // Make sure to define this function
+    const timezone = getTimezoneFromURL();
+    displayTargetTimes(endDate, timezone);
     const showClocks = getShowClocksFromURL();
     if (!showClocks) {
         document.querySelector('.timezone-display').style.display = 'none';
     }
     setInterval(() => updateAll(endDate), 1000);
     updateAll(endDate); // Initial call to avoid delay
+
+    // Set button color based on text color
+    const timestampButton = document.getElementById('copyTimestampButton');
+    timestampButton.style.backgroundColor = textColor;
+
+    const shortUrlButton = document.getElementById('copyShortUrlButton');
+    shortUrlButton.style.backgroundColor = textColor;
+
+    // Show the copy buttons on mouse move
+    let timeout;
+    document.addEventListener('mousemove', function() {
+        timestampButton.style.display = 'block';
+        shortUrlButton.style.display = 'block';
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            timestampButton.style.display = 'none';
+            shortUrlButton.style.display = 'none';
+        }, 30000); // 30 seconds
+    });
+
+    // Calculate and set the Discord timestamp
+    const unixTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
+    timestampButton.setAttribute('data-timestamp', `<t:${unixTimestamp}:R>`);
+
+    // Display the shortId if present
+    const shortId = getShortIdFromURL();
+    if (shortId) {
+        const shortUrl = `https://getmy.timer.pet/${shortId}`;
+        shortUrlButton.setAttribute('data-url', shortUrl);
+        shortUrlButton.style.display = 'block';
+    }
 });
 
+function copyToClipboard(type) {
+    let text;
+    let button;
+    if (type === 'timestamp') {
+        button = document.getElementById('copyTimestampButton');
+        text = button.getAttribute('data-timestamp');
+    } else if (type === 'shortUrl') {
+        button = document.getElementById('copyShortUrlButton');
+        text = button.getAttribute('data-url');
+    }
+
+    navigator.clipboard.writeText(text).then(function() {
+        button.classList.add('success');
+        button.textContent = '';
+        setTimeout(() => {
+            button.classList.remove('success');
+            button.textContent = type === 'timestamp' ? 'Copy Discord Timestamp' : 'Copy Short URL';
+        }, 3000);
+    }, function(err) {
+        alert(`Failed to copy the ${type}`);
+    });
+}
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
@@ -34,10 +87,16 @@ function getShowClocksFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('showClocks') === 'true';
 }
+
 function getTimezoneFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const timezone = urlParams.get('timezone');
     return timezone ? decodeURIComponent(timezone) : 'UTC'; // Default to 'UTC' if not specified
+}
+
+function getShortIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('shortId');
 }
 
 function updateAll(endDate) {

@@ -13,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
     <link rel="manifest" href="/manifest.json">
-
 </head>
 <body>
 
@@ -53,8 +52,15 @@
         <p id="ukTime">Loading...</p>
     </div>
 </div>
-<div id="targetTimeInTargetTimezone"></div>
-<div id="targetTimeInLocalTimezone"></div>
+
+<div class="target-time-container">
+    <div id="targetTimeInTargetTimezone"></div>
+    <div id="targetTimeInLocalTimezone"></div>
+    <div class="button-container">
+        <button id="copyTimestampButton" onclick="copyToClipboard('timestamp')" style="display: block;">Copy Discord Timestamp</button>
+        <button id="copyShortUrlButton" onclick="copyToClipboard('shortUrl')" style="display: block;">Copy Short URL</button>
+    </div>
+</div>
 
 <script src="./js/timer.js"></script>
 </body>

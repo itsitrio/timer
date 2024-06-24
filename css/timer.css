@@ -28,9 +28,6 @@ body, html {
     margin: 20px 0;
 }
 
-.countdown h1 {
-}
-
 .time-container {
     display: flex;
     justify-content: center;
@@ -78,4 +75,48 @@ body, html {
     font-size: 2.5rem;
     font-weight:200px;
     margin:15px 0;
+}
+
+#copyTimestampButton, #copyShortUrlButton {
+    background-color: var(--text-color);
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px; /* Add margin to separate buttons */
+}
+
+#copyTimestampButton:hover, #copyShortUrlButton:hover {
+    background-color: #45a049;
+}
+
+.target-time-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row; /* Place items in a row */
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.target-time-container div {
+    margin-bottom: 10px; /* Space between items */
+}
+
+button.success {
+    background-color: #4CAF50; /* Green background */
+}
+
+button.success::after {
+    content: "✓"; /* Checkmark */
+    color: white;
 }

@@ -134,3 +134,47 @@ button.toggle-button {
     align-items: center;
     justify-content: center;
 }
+
+#discordTimestamps {
+    background: #111;
+    margin: 1rem;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 4px #333333;
+    flex: 0 0 300px;
+    width: 300px;
+    display: none;
+}
+
+#discordTimestamps label {
+    display: block;
+    margin: 6px 0 3px 0;
+}
+
+#discordTimestamps input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: black;
+    background-color: white;
+}
+
+#discordTimestamps button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#discordTimestamps button:hover {
+    background-color: #45a049;
+}
