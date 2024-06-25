@@ -23,12 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let timeout;
     document.addEventListener('mousemove', function() {
         timestampButton.style.display = 'block';
-        shortUrlButton.style.display = 'block';
+        if (shortUrlButton.getAttribute('data-url')) {
+            shortUrlButton.style.display = 'block';
+        }
         clearTimeout(timeout);
         timeout = setTimeout(function() {
             timestampButton.style.display = 'none';
             shortUrlButton.style.display = 'none';
-        }, 30000); // 30 seconds
+        }, 5000); // 30 seconds
     });
 
     // Calculate and set the Discord timestamp
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display the shortId if present
     const shortId = getShortIdFromURL();
     if (shortId) {
-        const shortUrl = `https://getmy.timer.pet/${shortId}`;
+        const shortUrl = `https://yourdomain.com/${shortId}`;
         shortUrlButton.setAttribute('data-url', shortUrl);
         shortUrlButton.style.display = 'block';
     }
@@ -66,6 +68,7 @@ function copyToClipboard(type) {
         alert(`Failed to copy the ${type}`);
     });
 }
+
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
