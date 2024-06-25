@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timeout = setTimeout(function() {
             timestampButton.style.display = 'none';
             shortUrlButton.style.display = 'none';
-        }, 30000); // 30 seconds
+        }, 5000); // 30 seconds
     });
 
     // Calculate and set the Discord timestamp
