@@ -70,6 +70,8 @@
                 <option value="false">No</option>
                 <option value="true">Yes</option>
             </select>
+            <label for="title">Organization Credit:</label>
+            <input type="text" id="orgCredit" name="orgCredit" placeholder="WaterWolf, Anthrocon, etc...">
         </div>
 
     </form>
@@ -100,6 +102,7 @@
     document.getElementById('wizardForm').onsubmit = async function(e) {
         e.preventDefault();
         const title = encodeURIComponent(document.getElementById('title').value);
+        const orgCredit = encodeURIComponent(document.getElementById('orgCredit').value);
         const showClocks = document.getElementById('showClocks').value;
         const endDateInput = document.getElementById('endDate').value;
         const timezone = document.getElementById('timezone').value;
@@ -112,7 +115,7 @@
             endDateUTC = moment.tz(endDateInput, timezone).utc().format();
         }
     
-        const countdownUrl = `https://timer.pet/timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}`;
+        const countdownUrl = `https://timer.pet/timer?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}&orgCredit=${orgCredit}`;
     
         try {
             const response = await fetch('https://getmy.timer.pet/shorten', {
