@@ -1,20 +1,15 @@
-{ 
-
+{
   "name": "Simple Countdown",
   "short_name": "Countdown",
   "theme_color": "#000000",
   "background_color": "#000000",
   "display": "fullscreen",
-  "start_url": "https://timer.pet",
-
-  "icons": [{ 
-
-    "src": "/img/TimerPet.png", 
-
-    "sizes": "512x512", 
-
-    "type": "image/png" 
-
-  }] 
-
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/img/TimerPet.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

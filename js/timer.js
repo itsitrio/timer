@@ -21,12 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!showClocks) {
         document.querySelector('.timezone-display').style.display = 'none';
     }
-    const intervalId = setInterval(() => {
-        if (!updateAll(endDate)) {
-            clearInterval(intervalId);
-        }
-    }, 1000);
-    updateAll(endDate); // Initial call to avoid delay
+    tick(endDate);
 
     // Set button color based on text color
     const timestampButton = document.getElementById('copyTimestampButton');
@@ -61,6 +56,15 @@ document.addEventListener('DOMContentLoaded', function() {
         shortUrlButton.style.display = 'block';
     }
 });
+
+// Self-correcting timer: schedules each update just after the next whole
+// second so it never drifts, and stops once the countdown has ended
+function tick(endDate) {
+    if (!updateAll(endDate)) {
+        return;
+    }
+    setTimeout(() => tick(endDate), 1000 - (Date.now() % 1000) + 5);
+}
 
 function copyToClipboard(type) {
     let text;
@@ -166,19 +170,39 @@ function updateCountdown(targetDate) {
     return true;
 }
 
-function displayTargetTimes(targetDateUTC, targetTimezone) {
-    // Hide the target timezone display if 'Local' is selected
-    if (targetTimezone === 'Local') {
-        document.getElementById('targetTimeInTargetTimezone').style.display = 'none';
-    } else {
-        const targetTimeInTargetTimezone = moment.utc(targetDateUTC).tz(targetTimezone).format('YYYY-MM-DD HH:mm:ss');
-        document.getElementById('targetTimeInTargetTimezone').textContent = `Target in ${targetTimezone}: ${targetTimeInTargetTimezone}`;
-        document.getElementById('targetTimeInTargetTimezone').style.display = 'block';
+// Formats a date as 'YYYY-MM-DD HH:mm:ss' in the given IANA timezone.
+// The sv-SE locale happens to use exactly that layout.
+function formatInTimezone(date, timeZone) {
+    return new Intl.DateTimeFormat('sv-SE', {
+        timeZone,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hourCycle: 'h23'
+    }).format(date);
+}
+
+function displayTargetTimes(targetDate, targetTimezone) {
+    const targetElement = document.getElementById('targetTimeInTargetTimezone');
+    let formattedTarget = null;
+    // Skip the target timezone display if 'Local' is selected or the zone is unknown
+    if (targetTimezone !== 'Local') {
+        try {
+            formattedTarget = formatInTimezone(targetDate, targetTimezone);
+        } catch (e) {
+            console.warn(`Unknown timezone "${targetTimezone}"`);
+        }
     }
-    
+    if (formattedTarget) {
+        targetElement.textContent = `Target in ${targetTimezone}: ${formattedTarget}`;
+        targetElement.style.display = 'block';
+    } else {
+        targetElement.style.display = 'none';
+    }
+
     // Always show the target time in the user's local timezone
-    const targetTimeInLocalTimezone = moment.utc(targetDateUTC).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss');
-    document.getElementById('targetTimeInLocalTimezone').textContent = `Local Target Time: ${targetTimeInLocalTimezone}`;
+    const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('targetTimeInLocalTimezone').textContent =
+        `Local Target Time: ${formatInTimezone(targetDate, localZone)}`;
 }
 
 function updateUnitVisibility(unit, value, anyUnitVisible) {

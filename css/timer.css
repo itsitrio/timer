@@ -129,18 +129,29 @@ button.success::after {
 
 
 @media (max-width: 768px) {
+    .countdown {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 10px;
+    }
+
     #countdownTitle {
         font-size: 2.5rem;
+        overflow-wrap: anywhere;
     }
 
     .time-container {
-        flex-wrap: wrap;
         font-size: 1em;
     }
 
     .time-unit {
-        margin: 0 8px;
-        min-width: 100px;
+        margin: 0 4px;
+        min-width: 0;
+        flex: 1 1 0;
+    }
+
+    .time-unit span {
+        font-size: 3em;
     }
 
     .timezone {
@@ -151,5 +162,10 @@ button.success::after {
 
     .timezone p {
         font-size: 1.8rem;
+    }
+
+    .target-time-container {
+        padding: 0 10px;
+        overflow-wrap: anywhere;
     }
 }
