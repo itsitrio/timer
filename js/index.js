@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
         `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
     populateTimezones();
+    document.getElementById('endDate').addEventListener('change', populateTimezones);
+    document.getElementById('toggleTimezones').addEventListener('click', function() {
+        showAllTimezones = !showAllTimezones;
+        this.textContent = showAllTimezones ? 'Show common timezones' : 'Show all timezones';
+        this.setAttribute('aria-expanded', String(showAllTimezones));
+        populateTimezones();
+    });
 
     document.getElementById('toggleDisplaySettings').addEventListener('click', function() {
         const displaySettings = document.getElementById('displaySettings');
@@ -22,17 +29,76 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('wizardForm').addEventListener('submit', handleSubmit);
 });
 
-// Fill the "All Timezones" group from the browser's IANA timezone list
-function populateTimezones() {
-    if (typeof Intl.supportedValuesOf !== 'function') {
-        return;
+const COMMON_TIMEZONES = [
+    ['America/Los_Angeles', 'Pacific'],
+    ['America/Phoenix', 'Arizona'],
+    ['America/Denver', 'Mountain'],
+    ['America/Chicago', 'Central'],
+    ['America/New_York', 'Eastern'],
+    ['UTC', 'UTC']
+];
+
+let showAllTimezones = false;
+
+// 'GMT-5', 'GMT+5:30' or 'GMT' for an offset in milliseconds
+function formatOffset(offsetMs) {
+    const minutes = Math.round(offsetMs / 60000);
+    if (minutes === 0) {
+        return 'GMT';
     }
-    const group = document.getElementById('allTimezones');
-    for (const zone of Intl.supportedValuesOf('timeZone')) {
-        const option = document.createElement('option');
-        option.value = zone;
-        option.textContent = zone.replace(/_/g, ' ');
-        group.appendChild(option);
+    const sign = minutes < 0 ? '-' : '+';
+    const hours = Math.floor(Math.abs(minutes) / 60);
+    const mins = Math.abs(minutes) % 60;
+    return `GMT${sign}${hours}${mins ? ':' + String(mins).padStart(2, '0') : ''}`;
+}
+
+// Offsets depend on DST, so they are calculated for the chosen end date
+function selectedInstant() {
+    const value = document.getElementById('endDate').value;
+    const date = value ? new Date(value) : new Date();
+    return isNaN(date) ? Date.now() : date.getTime();
+}
+
+function makeOption(value, label, instant) {
+    const option = document.createElement('option');
+    option.value = value;
+    const zone = value === 'Local' ? Intl.DateTimeFormat().resolvedOptions().timeZone : value;
+    option.textContent = `(${formatOffset(timezoneOffset(instant, zone))}) ${label}`;
+    return option;
+}
+
+// Rebuild the timezone list: common zones, or every IANA zone when expanded
+function populateTimezones() {
+    const select = document.getElementById('timezone');
+    const previous = select.value || 'Local';
+    const instant = selectedInstant();
+    select.replaceChildren(makeOption('Local', 'My local time', instant));
+
+    const common = document.createElement('optgroup');
+    common.label = 'Common Timezones';
+    for (const [value, label] of COMMON_TIMEZONES) {
+        common.appendChild(makeOption(value, label, instant));
+    }
+    select.appendChild(common);
+
+    if (showAllTimezones && typeof Intl.supportedValuesOf === 'function') {
+        const commonValues = new Set(COMMON_TIMEZONES.map(([value]) => value));
+        const zones = Intl.supportedValuesOf('timeZone')
+            .filter((zone) => !commonValues.has(zone))
+            .map((zone) => ({ zone, offset: timezoneOffset(instant, zone) }))
+            .sort((a, b) => a.offset - b.offset || a.zone.localeCompare(b.zone));
+        const all = document.createElement('optgroup');
+        all.label = 'All Timezones';
+        for (const { zone } of zones) {
+            all.appendChild(makeOption(zone, zone.replace(/_/g, ' '), instant));
+        }
+        select.appendChild(all);
+    }
+
+    // Keep the user's choice if it still exists (collapsing hides uncommon zones)
+    select.value = previous;
+    if (select.value !== previous) {
+        select.value = 'Local';
     }
 }
 

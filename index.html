@@ -24,18 +24,8 @@
                 <input type="datetime-local" id="endDate" name="endDate">
             
                 <label for="timezone">Timezone:</label>
-                <select id="timezone" name="timezone">
-                    <option value="Local" selected>My local time</option>
-                    <optgroup label="Common Timezones">
-                        <option value="America/Los_Angeles">Pacific</option>
-                        <option value="America/Phoenix">Arizona</option>
-                        <option value="America/Denver">Mountain</option>
-                        <option value="America/Chicago">Central</option>
-                        <option value="America/New_York">Eastern</option>
-                        <option value="UTC">UTC</option>
-                    </optgroup>
-                    <optgroup label="All Timezones" id="allTimezones"></optgroup>
-                </select>
+                <select id="timezone" name="timezone"></select>
+                <button type="button" id="toggleTimezones" class="link-button" aria-expanded="false">Show all timezones</button>
             
                 <div class="button-container">
                     <input type="submit" value="Create Countdown">

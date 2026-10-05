@@ -178,3 +178,15 @@ button.toggle-button {
 #discordTimestamps button:hover {
     background-color: #45a049;
 }
+
+button.link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
