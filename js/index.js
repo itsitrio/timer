@@ -2,6 +2,12 @@ const SHORTENER_URL = 'https://getmy.timer.pet/shorten';
 const SHORT_URL_PREFIX = 'https://getmy.timer.pet/';
 const TIMER_BASE_URL = 'https://timer.pet/timer';
 
+// The full-URL fallback stays on whatever site is serving the wizard, so
+// preview deploys and local servers link to themselves rather than production
+function fallbackBaseUrl() {
+    return location.protocol.startsWith('http') ? `${location.origin}/timer` : TIMER_BASE_URL;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Default the end date to 24 hours from now, formatted as YYYY-MM-DDTHH:MM
     const now = new Date();
@@ -145,7 +151,8 @@ async function handleSubmit(e) {
     const endDate = timezone === 'Local' ? new Date(endDateInput) : zonedTimeToUtc(endDateInput, timezone);
     const endDateUTC = endDate.toISOString().replace(/\.\d{3}Z$/, 'Z');
 
-    const countdownUrl = `${TIMER_BASE_URL}?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}&orgCredit=${orgCredit}`;
+    const query = `?title=${title}&showClocks=${showClocks}&date=${encodeURIComponent(endDateUTC)}&timezone=${encodeURIComponent(timezone)}&color=${encodeURIComponent(textColor)}&orgCredit=${orgCredit}`;
+    const countdownUrl = TIMER_BASE_URL + query;
 
     try {
         const response = await fetch(SHORTENER_URL, {
@@ -164,6 +171,6 @@ async function handleSubmit(e) {
     } catch (error) {
         // Shortener is unavailable: the full URL works just as well
         console.error('Could not shorten URL, using full URL:', error);
-        window.location.href = countdownUrl;
+        window.location.href = fallbackBaseUrl() + query;
     }
 }
