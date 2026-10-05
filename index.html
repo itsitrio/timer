@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="shortcut icon" href="/img/TimerPet.png">
     <link rel="apple-touch-icon" href="/img/TimerPet.png">
-    <link rel="apple-touch-icon" href="/img/TimerPet.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -29,6 +28,7 @@
             
                 <label for="timezone">Timezone:</label>
                 <select id="timezone" name="timezone">
+                    <option value="Local" selected>My local time</option>
                     <optgroup label="Common Timezones">
                         <option value="America/Los_Angeles">Pacific</option>
                         <option value="America/Phoenix">Arizona</option>
@@ -65,7 +65,7 @@
                 <option value="false">No</option>
                 <option value="true">Yes</option>
             </select>
-            <label for="title">Organization Credit:</label>
+            <label for="orgCredit">Organization Credit:</label>
             <input type="text" id="orgCredit" name="orgCredit" placeholder="Anthrocon, BLFC, etc...">
         </div>
 
@@ -125,7 +125,7 @@
     
             const data = await response.json();
             console.log("Shortened URL data:", data);
-            if (data.shortUrl) {
+            if (typeof data.shortUrl === 'string' && data.shortUrl.startsWith('https://getmy.timer.pet/')) {
                 window.location.href = data.shortUrl;
             } else {
                 alert('Failed to shorten URL');

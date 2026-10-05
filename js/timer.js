@@ -1,15 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
     const endDate = getDateFromURL();
+    if (isNaN(endDate)) {
+        document.querySelector('.countdown').innerHTML = '<h1>Invalid Date</h1>';
+        document.querySelector('.timezone-display').style.display = 'none';
+        return;
+    }
     const textColor = getColorFromURL();
     document.documentElement.style.setProperty('--text-color', textColor);
     document.getElementById('countdownTitle').textContent = getTitleFromURL() || 'Countdown Timer';
+    const orgCredit = getOrgCreditFromURL();
+    const orgCreditElement = document.getElementById('orgCredit');
+    if (orgCredit) {
+        orgCreditElement.textContent = orgCredit;
+    } else {
+        orgCreditElement.style.display = 'none';
+    }
     const timezone = getTimezoneFromURL();
     displayTargetTimes(endDate, timezone);
     const showClocks = getShowClocksFromURL();
     if (!showClocks) {
         document.querySelector('.timezone-display').style.display = 'none';
     }
-    setInterval(() => updateAll(endDate), 1000);
+    const intervalId = setInterval(() => {
+        if (!updateAll(endDate)) {
+            clearInterval(intervalId);
+        }
+    }, 1000);
     updateAll(endDate); // Initial call to avoid delay
 
     // Set button color based on text color
@@ -30,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timeout = setTimeout(function() {
             timestampButton.style.display = 'none';
             shortUrlButton.style.display = 'none';
-        }, 5000); // 30 seconds
+        }, 5000); // Hide again after 5 seconds of inactivity
     });
 
     // Calculate and set the Discord timestamp
@@ -71,7 +87,7 @@ function copyToClipboard(type) {
 
 function getTitleFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('title') ? decodeURIComponent(urlParams.get('title')) : 'Countdown Timer';
+    return urlParams.get('title') || 'Countdown Timer'; // URLSearchParams already decodes
 }
 
 function getColorFromURL() {
@@ -83,7 +99,7 @@ function getDateFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const defaultDate = new Date();
     defaultDate.setHours(defaultDate.getHours() + 1); // Default to 1 hour from now
-    return urlParams.get('date') ? new Date(decodeURIComponent(urlParams.get('date'))) : defaultDate;
+    return urlParams.get('date') ? new Date(urlParams.get('date')) : defaultDate;
 }
 
 function getShowClocksFromURL() {
@@ -94,7 +110,12 @@ function getShowClocksFromURL() {
 function getTimezoneFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const timezone = urlParams.get('timezone');
-    return timezone ? decodeURIComponent(timezone) : 'UTC'; // Default to 'UTC' if not specified
+    return timezone || 'UTC'; // Default to 'UTC' if not specified
+}
+
+function getOrgCreditFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('orgCredit');
 }
 
 function getShortIdFromURL() {
@@ -102,15 +123,17 @@ function getShortIdFromURL() {
     return urlParams.get('shortId');
 }
 
+// Returns false once the countdown has ended so the caller can stop ticking
 function updateAll(endDate) {
-    updateCountdown(endDate);
     updateClocks();
+    return updateCountdown(endDate);
 }
 
 function updateClocks() {
-    updateIfChanged('localTime', new Date().toLocaleTimeString());
-    updateIfChanged('nyTime', new Date().toLocaleTimeString('en-US', { timeZone: 'America/New_York' }));
-    updateIfChanged('ukTime', new Date().toLocaleTimeString('en-US', { timeZone: 'Europe/London' }));
+    const now = new Date();
+    updateIfChanged('localTime', now.toLocaleTimeString());
+    updateIfChanged('nyTime', now.toLocaleTimeString('en-US', { timeZone: 'America/New_York' }));
+    updateIfChanged('ukTime', now.toLocaleTimeString('en-US', { timeZone: 'Europe/London' }));
 }
 
 function updateIfChanged(elementId, newValue) {
@@ -126,7 +149,7 @@ function updateCountdown(targetDate) {
 
     if (distance < 0) {
         document.querySelector('.countdown').innerHTML = "<h1>Countdown Ended</h1>";
-        return;
+        return false;
     }
 
     // Determine visibility based on significance
@@ -140,6 +163,7 @@ function updateCountdown(targetDate) {
     anyUnitVisible = updateUnitVisibility('hours', hours, anyUnitVisible);
     anyUnitVisible = updateUnitVisibility('minutes', minutes, anyUnitVisible);
     updateUnitVisibility('seconds', seconds, anyUnitVisible); // Seconds are always updated
+    return true;
 }
 
 function displayTargetTimes(targetDateUTC, targetTimezone) {

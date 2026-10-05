@@ -18,6 +18,12 @@ body, html {
 }
 
 
+#orgCredit {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
 #countdownTitle {
     font-size: 4rem;
     color: var(--text-color);
@@ -73,7 +79,7 @@ body, html {
 }
 .timezone p {
     font-size: 2.5rem;
-    font-weight:200px;
+    font-weight: 200;
     margin:15px 0;
 }
 
@@ -89,7 +95,7 @@ body, html {
 }
 
 #copyTimestampButton:hover, #copyShortUrlButton:hover {
-    background-color: #45a049;
+    filter: brightness(1.15);
 }
 
 .target-time-container {
@@ -119,4 +125,31 @@ button.success {
 button.success::after {
     content: "✓"; /* Checkmark */
     color: white;
+}
+
+
+@media (max-width: 768px) {
+    #countdownTitle {
+        font-size: 2.5rem;
+    }
+
+    .time-container {
+        flex-wrap: wrap;
+        font-size: 1em;
+    }
+
+    .time-unit {
+        margin: 0 8px;
+        min-width: 100px;
+    }
+
+    .timezone {
+        min-width: 0;
+        width: calc(100% - 40px);
+        box-sizing: border-box;
+    }
+
+    .timezone p {
+        font-size: 1.8rem;
+    }
 }
